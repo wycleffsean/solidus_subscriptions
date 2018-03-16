@@ -6,7 +6,9 @@ FactoryGirl.define do
 
     user do
       create(:user, :subscription_user).tap do |user|
-        create(:credit_card, gateway_customer_profile_id: 'BGS-123', user: user, default: true)
+        Spree::Deprecation.silence do
+          create(:credit_card, gateway_customer_profile_id: 'BGS-123', user: user, default: true)
+        end
       end
     end
 

@@ -5,7 +5,9 @@ RSpec.describe SolidusSubscriptions::Checkout do
   let(:root_order) { create :completed_order_with_pending_payment }
   let(:subscription_user) do
     create(:user, :subscription_user).tap do |user|
-      create(:credit_card, gateway_customer_profile_id: 'BGS-123', user: user, default: true)
+      Spree::Deprecation.silence do
+        create(:credit_card, gateway_customer_profile_id: 'BGS-123', user: user, default: true)
+      end
     end
   end
   let(:installments) { create_list(:installment, 2, installment_traits) }
